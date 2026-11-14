@@ -3,7 +3,6 @@ import io
 from pathlib import Path
 
 import numpy as np
-import zopfli.png
 from PIL import Image
 
 WIDTH, HEIGHT = 480, 270
@@ -86,21 +85,21 @@ def dither(img: np.ndarray) -> np.ndarray:
     return indices
 
 
-def encode_png(indices: np.ndarray) -> bytes:
+def encode_webp(indices: np.ndarray) -> bytes:
     image = Image.fromarray(indices, "P")
     image.putpalette([int(c) for rgb in PALETTE for c in rgb])
     buffer = io.BytesIO()
-    image.save(buffer, "PNG", optimize=True, bits=4)
-    return zopfli.png.optimize(buffer.getvalue())
+    image.convert("RGB").save(buffer, "WEBP", lossless=True, quality=100, method=6, exact=True)
+    return buffer.getvalue()
 
 
 def build_art_data_url() -> str:
-    png = encode_png(dither(paint_sky()))
-    return "data:image/png;base64," + base64.b64encode(png).decode()
+    webp = encode_webp(dither(paint_sky()))
+    return "data:image/webp;base64," + base64.b64encode(webp).decode()
 
 
 if __name__ == "__main__":
-    out = Path(__file__).parent / "build" / "art.png"
+    out = Path(__file__).parent / "build" / "art.webp"
     out.parent.mkdir(exist_ok=True)
-    out.write_bytes(encode_png(dither(paint_sky())))
+    out.write_bytes(encode_webp(dither(paint_sky())))
     print(out)
