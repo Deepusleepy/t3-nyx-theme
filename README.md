@@ -7,6 +7,7 @@ A night-sky theme for [T3 Code](https://t3.codes). The background is a starry sk
 ![Model picker](previews/model-picker.png)
 ![Side panel](previews/side-panel.png)
 ![Pull requests](previews/pull-requests.png)
+![Usage](previews/usage.png)
 ![Settings](previews/settings.png)
 
 ## Install
@@ -39,7 +40,7 @@ Paste this into a T3 Code thread:
 ## Notes
 
 - Nyx is dark only. It keeps T3 dark even when your computer is in light mode.
-- The see-through look follows the Glass opacity slider in Settings › Appearance.
+- The see-through look follows the Glass opacity slider in Settings › Appearance. It looks best at around 40%, which is what the screenshots use.
 - The sky fills the window at any size.
 - If a future T3 update changes its layout, a few small touches may fall back to T3's normal look. Nothing breaks.
 

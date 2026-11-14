@@ -77,7 +77,8 @@
 .dark [data-chat-canvas] [data-chat-composer-form],
 .dark [data-workspace-area="panel"] [class~="bg-background"],
 .dark [data-workspace-area="panel"] [class~="bg-card"],
-.dark [data-settings-page-scroll] {
+.dark [data-settings-page-scroll],
+.dark [data-workspace-area="pull-requests"] header {
   background-color: transparent !important;
   background-image: none !important;
 }
@@ -155,6 +156,11 @@
   background-image: linear-gradient(100deg, #8a7fe81a, #6f8cff08 55%, transparent 80%);
 }
 
+.dark [data-chat-canvas]:not(:has(.messages-timeline-scroll)) [data-slot="composer-host"]::before {
+  background: linear-gradient(110deg, #8a7fe838, #6f8cff0f 50%, #0000 80%), color-mix(in srgb, #1a1745 max(72%, var(--glass-opacity)), #0000) !important;
+  box-shadow: inset 0 0 0 1px #b4aaff3d, inset 0 1px 0 #ffffff1f, inset 0 -16px 26px -20px #a99fff80;
+}
+
 .dark [data-chat-canvas]:has(.messages-timeline-scroll) [data-slot="composer-shell"]::before {
   background-image: linear-gradient(90deg, #8a7fe830, #6f8cff12 60%, #6f8cff05) !important;
   box-shadow: inset 0 -18px 28px -20px #7864ff66, inset 0 1px 0 #ffffff0d;
@@ -226,3 +232,15 @@
   box-shadow: inset 0 1px 0 #ffffff0f, 0 24px 60px -20px #000000e6 !important;
 }
 
+
+.dark [data-app-modal] [style*="d) 30%"] {
+  background-color: #3a3486 !important;
+}
+
+.dark [data-app-modal] [style*="d) 60%"] {
+  background-color: #6f6cf0 !important;
+}
+
+.dark [data-app-modal] [style*="d) 72%"] {
+  background-color: #a99fff !important;
+}
