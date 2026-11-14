@@ -3,8 +3,10 @@
 A night-sky theme for [T3 Code](https://t3.codes). The background is a starry sky with a purple aurora, drawn as tiny glowing dots like an LED screen. Menus and panels stay see-through like the default T3 look.
 
 ![New thread](previews/new-thread.png)
-![A thread with the side panel open](previews/thread.png)
+![A conversation](previews/thread.png)
 ![Model picker](previews/model-picker.png)
+![Side panel](previews/side-panel.png)
+![Pull requests](previews/pull-requests.png)
 ![Settings](previews/settings.png)
 
 ## Install
