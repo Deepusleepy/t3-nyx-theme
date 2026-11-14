@@ -31,6 +31,9 @@ COLORS = {
     "update": "#8a7fe8",
     "updateForeground": "#b4aaff",
     "updateSurface": "#17152e",
+    "muted": "#1a1840",
+    "secondary": "#16143a",
+    "secondaryForeground": "#f1f0ff",
     "mutedForeground": "#a6a3c0",
     "secondaryLabel": "#a6a3c0",
     "sidebarMutedForeground": "#9d9ab8",
@@ -62,12 +65,14 @@ def minify(css: str) -> str:
         return f"\x00{len(strings) - 1}\x00"
 
     css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    css = re.sub(r'="([A-Za-z_][\w-]*)"\]', r"=\1]", css)
     css = re.sub(r'"[^"]*"', stash, css)
     css = re.sub(r"\s+", " ", css)
     css = re.sub(r"\s*([{}:;,>])\s*", r"\1", css)
     css = re.sub(r"\s*!important", "!important", css)
     css = css.replace(";}", "}")
     css = re.sub(r"\btransparent\b", "#0000", css)
+    css = re.sub(r"(?<![\w.])0\.(\d)", r".\1", css)
     for long_name in sorted(SHORT_VARIABLES, key=len, reverse=True):
         css = css.replace(long_name, SHORT_VARIABLES[long_name])
     css = re.sub(r"\x00(\d+)\x00", lambda m: strings[int(m.group(1))], css)

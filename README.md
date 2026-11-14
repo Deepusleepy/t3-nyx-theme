@@ -1,9 +1,11 @@
 # Nyx
 
-A night-sky theme for [T3 Code](https://t3.codes). The sky is drawn as a dithered LED wall, with an aurora and twinkling stars. The sidebar, composer and popups keep T3's liquid glass.
+A night-sky theme for [T3 Code](https://t3.codes). The background is a starry sky with a purple aurora, drawn as tiny glowing dots like an LED screen. Menus and panels stay see-through like the default T3 look.
 
-![New thread](previews/1-new-thread.png)
-![Thread with the right panel](previews/2-thread-with-panel.png)
+![New thread](previews/new-thread.png)
+![A thread with the side panel open](previews/thread.png)
+![Model picker](previews/model-picker.png)
+![Settings](previews/settings.png)
 
 ## Install
 
@@ -12,7 +14,7 @@ curl -fsSL https://raw.githubusercontent.com/Deepusleepy/t3-nyx-theme/main/nyx.j
 t3 theme set nyx.json
 ```
 
-Every web and desktop client of that T3 server switches to Nyx. To go back, pick another theme in the theme picker or run `t3 theme set t3-chat`.
+T3 switches to Nyx right away, in the desktop app and in the browser. To go back, pick another theme in the theme picker or run `t3 theme set t3-chat`.
 
 ### Let your agent install it
 
@@ -25,23 +27,23 @@ Paste this into a T3 Code thread:
 1. Download `https://raw.githubusercontent.com/Deepusleepy/t3-nyx-theme/main/nyx.json`.
 2. If the `t3` command is available, run `t3 theme set <path to nyx.json>`.
 3. Otherwise call the `t3_theme_set` tool with `themeId: "nyx"` and the file's JSON as `theme`.
-4. Do not edit the file. Its CSS is close to T3's 20,000-character limit.
+4. Do not edit the file. It is close to the size limit T3 allows for themes.
 
 ## Requirements
 
-- T3 Code with theme CSS support (Nightly from November 2026 onward).
-- Desktop or web client. T3's mobile app does not use themes.
+- A recent T3 Code Nightly (November 2026 or later).
+- Works in the desktop app and the browser. The phone app doesn't use themes.
 
 ## Notes
 
-- Nyx is dark only. It keeps T3 dark even when your system is in light mode.
-- The frosted sidebar follows the Glass opacity setting in Settings › Appearance. At 100% it is solid.
-- The art is a 480×270, 16-colour PNG embedded in the theme. On windows larger than 1920×1080 the dots scale up so the sky still fills the window.
-- A few rules use parts of T3's layout that are not on its list of stable selectors. If a release renames them, those parts fall back to T3's default look. Nothing else breaks.
+- Nyx is dark only. It keeps T3 dark even when your computer is in light mode.
+- The see-through look follows the Glass opacity slider in Settings › Appearance.
+- The sky fills the window at any size.
+- If a future T3 update changes its layout, a few small touches may fall back to T3's normal look. Nothing breaks.
 
-## Build from source
+## Change the theme yourself
 
-`theme.css` is the readable source. `art.py` draws and dithers the sky. `build.py` minifies the CSS, embeds the art and checks the result fits T3's limit.
+`theme.css` holds the styles, `art.py` draws the sky, and `build.py` puts them together into `nyx.json`.
 
 ```sh
 python3 -m venv .venv

@@ -180,7 +180,7 @@
 
 .dark [data-workspace-area="settings-nav"] [data-slot="sidebar-menu-button"][data-active="true"] {
   background: linear-gradient(90deg, #8a7fe847, #6f8cff1a 60%, #6f8cff08) !important;
-  box-shadow: inset 0 -12px 18px -14px #7864ff8c, inset 0 1px 0 #ffffff0a !important;
+  box-shadow: var(--nyx-sheen-edge) !important;
 }
 
 
@@ -192,13 +192,15 @@
   border-color: transparent !important;
 }
 
-.dark [data-slot="toggle"][aria-pressed="true"] {
+.dark [data-slot="toggle"][aria-pressed="true"],
+.dark [data-environment-identification="pill"] {
   background: linear-gradient(90deg, #8a7fe84c, #6f8cff1a), #0d0b26 !important;
+  color: #e6e2ff;
   box-shadow: inset 0 -8px 14px -10px #7864ff99, inset 0 1px 0 #ffffff14 !important;
 }
 
 .dark [data-chat-composer-form] button[class~="bg-message-action"]:not(:disabled),
-.dark [data-chat-composer-form] button[class~="bg-destructive"] {
+.dark [data-chat-composer-form] button[class~="bg-destructive/90"] {
   background: radial-gradient(100% 60% at 50% 0%, #ffffff1f, #0000 70%), linear-gradient(150deg, var(--nyx-key)), #0d0b26 !important;
   box-shadow: inset 0 1px 0 #ffffff26, inset 0 -8px 14px -10px var(--nyx-key-glow), 0 0 0 1px var(--nyx-key-rim), 0 4px 14px -6px var(--nyx-key-glow) !important;
   color: #f1f0ff !important;
@@ -207,7 +209,7 @@
   --nyx-key-rim: #b4aaff33;
 }
 
-.dark [data-chat-composer-form] button[class~="bg-destructive"] {
+.dark [data-chat-composer-form] button[class~="bg-destructive/90"] {
   --nyx-key: #e0648f80, #e0648f26 60%, #a8325e26;
   --nyx-key-glow: #ff7aa6cc;
   --nyx-key-rim: #ff9ebf33;
@@ -216,3 +218,11 @@
 .dark [data-slot="switch-thumb"] {
   background: #e6e2ff !important;
 }
+
+.dark [data-slot="popover-popup"],
+.dark [data-slot="menu-popup"] {
+  background: linear-gradient(160deg, #8a7fe81f, #0000 45%), color-mix(in srgb, #0b0a1e var(--glass-opacity), #0000) !important;
+  border-color: #b4aaff1f !important;
+  box-shadow: inset 0 1px 0 #ffffff0f, 0 24px 60px -20px #000000e6 !important;
+}
+
