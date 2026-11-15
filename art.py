@@ -72,8 +72,6 @@ def dither(img: np.ndarray) -> np.ndarray:
     indices = ((jittered[:, :, None, :] - PALETTE[None, None]) ** 2).sum(-1).argmin(-1).astype(np.uint8)
 
     dark = img.sum(-1) < 40
-    speck = dark & (rng.random((HEIGHT, WIDTH)) < 0.009)
-    indices[speck] = rng.choice([1, 2, 3, 14], size=speck.sum())
     stars = dark & (rng.random((HEIGHT, WIDTH)) < 0.0022)
     indices[stars] = rng.choice([8, 9, 15], size=stars.sum())
     for _ in range(10):
