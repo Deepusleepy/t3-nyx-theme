@@ -38,11 +38,6 @@ COLORS = {
     "secondaryLabel": "#a6a3c0",
     "sidebarMutedForeground": "#9d9ab8",
     "sidebarControlSurface": "#000000",
-    "sidebarRowHover": "#b4aaff14",
-    "sidebarRowActive": "#b4aaff1f",
-    "sidebarRowSelected": "#8a7fe829",
-    "accentSurface": "#8a7fe824",
-    "accentSurfaceForeground": "#f1f0ff",
     "codeBackground": "#08071a",
     "terminalBackground": "#06051a",
     "terminalCursor": "#b4aaff",
@@ -51,6 +46,7 @@ COLORS = {
 
 
 SHORT_VARIABLES = {
+    "--nyx-dot-pair": "--D",
     "--nyx-key-glow": "--kg",
     "--nyx-key-rim": "--kr",
     "--nyx-key": "--k",
@@ -75,6 +71,7 @@ def minify(css: str) -> str:
     css = re.sub(r"\s+", " ", css)
     css = re.sub(r"\s*([{}:;,>])\s*", r"\1", css)
     css = re.sub(r"\s*!important", "!important", css)
+    css = re.sub(r" ([*/]) ", r"\1", css)
     css = css.replace(";}", "}")
     css = re.sub(r"\btransparent\b", "#0000", css)
     css = re.sub(r"(?<![\w.])0\.(\d)", r".\1", css)
