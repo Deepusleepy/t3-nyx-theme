@@ -48,6 +48,10 @@
   background: #000000bd !important;
 }
 
+.dark [data-side-chat-pane] [data-chat-canvas] {
+  background: #0000 !important;
+}
+
 .dark [data-workspace-area="panel"],
 .dark [data-workspace-area="pull-requests"] {
   background: #03030ad1 !important;
