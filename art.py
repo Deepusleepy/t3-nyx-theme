@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-WIDTH, HEIGHT = 480, 270
+WIDTH, HEIGHT = 384, 216
 SUPERSAMPLE = 3
 SEED = 7
 
