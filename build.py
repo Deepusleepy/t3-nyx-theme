@@ -67,7 +67,7 @@ def minify(css: str) -> str:
 
     css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
     css = re.sub(r'="([A-Za-z_][\w-]*)"\]', r"=\1]", css)
-    css = re.sub(r'"[^"]*"', stash, css)
+    css = re.sub(r'"[^"]*"|url\(data:[^)]*\)', stash, css)
     css = re.sub(r"\s+", " ", css)
     css = re.sub(r"\s*([{};,>])\s*", r"\1", css)
     css = re.sub(r":\s+", ":", css)
