@@ -1,8 +1,7 @@
 .dark {
-  --nyx-grid: linear-gradient(90deg, #000 1px, transparent 0), linear-gradient(0deg, #000 1px, transparent 0);
   --nyx-art-width: max(1920px, 100vw, 100dvh * 16 / 9);
   --nyx-dot: calc(var(--nyx-art-width) / 384);
-  --nyx-dot-pair: var(--nyx-dot) var(--nyx-dot);
+  --nyx-grid: linear-gradient(90deg, #000 1px, transparent 0) 100% 100% / var(--nyx-dot) var(--nyx-dot), linear-gradient(0deg, #000 1px, transparent 0) 100% 100% / var(--nyx-dot) var(--nyx-dot);
   --nyx-sheen-edge: inset 0 -14px 22px -16px #7864ff8c, inset 0 1px 0 #ffffff0a;
   --nyx-art: url(__ART__);
 }
@@ -33,16 +32,9 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: var(--nyx-grid), var(--nyx-art);
-  background-size: var(--nyx-dot-pair), var(--nyx-dot-pair), var(--nyx-art-width);
-  background-position: 100% 100%;
-  background-repeat: repeat, repeat, no-repeat;
+  background: var(--nyx-grid), var(--nyx-art) 100% 100% / var(--nyx-art-width) no-repeat;
   image-rendering: pixelated;
   will-change: transform;
-}
-
-[data-chat-canvas] {
-  background: #0000;
 }
 
 [data-chat-canvas]:has(.messages-timeline-scroll):not([data-side-chat-pane] *) {
@@ -56,12 +48,8 @@
 }
 
 [data-slot="dialog-popup"][data-app-modal] {
-  background-color: #000;
-  background-image: linear-gradient(#03030ad1, #03030ad1), var(--nyx-grid), var(--nyx-art);
-  background-size: 100% 100%, var(--nyx-dot-pair), var(--nyx-dot-pair), var(--nyx-art-width);
-  background-position: 100% 100%;
+  background: linear-gradient(#03030ad1, #03030ad1), var(--nyx-grid), var(--nyx-art) 100% 100% / var(--nyx-art-width) no-repeat #000;
   background-attachment: fixed;
-  background-repeat: no-repeat, repeat, repeat;
   border-color: #ffffff12;
   image-rendering: pixelated;
 
@@ -70,6 +58,7 @@
   }
 }
 
+[data-chat-canvas],
 [data-slot="sidebar-inset"],
 [data-slot="sidebar-inset"] > div,
 [data-chat-canvas] :is([data-workspace-area="conversation"], [data-timeline-loading], .messages-timeline-scroll, [data-chat-composer-form]),
@@ -119,9 +108,7 @@
     white-space: nowrap;
     color: transparent;
     background: var(--nyx-grid), linear-gradient(170deg, #d2c8ff, #9aa6ff);
-    background-size: var(--nyx-dot-pair), var(--nyx-dot-pair), 100% 100%;
     background-attachment: fixed, fixed, scroll;
-    background-position: 100% 100%, 100% 100%, 0 0;
     background-clip: text;
     opacity: 0.5;
     mix-blend-mode: plus-lighter;
@@ -185,7 +172,6 @@
   }
 }
 
-[data-slot="toggle"][aria-pressed="true"],
 [data-slot="switch"][data-checked] {
   background: linear-gradient(90deg, #8a7fe88c, #6f8cff33), #0d0b26;
   box-shadow: inset 0 -8px 14px -10px #a99fffcc, inset 0 1px 0 #ffffff14;
@@ -273,11 +259,11 @@
     --pe: 1.125rem;
   }
 
-  &:has([aria-label="Unpin thread"], [aria-label="Pinned"]) {
+  &:has(.h-5 > [aria-label*="pin" i]) {
     --pi: 1.125rem;
   }
 
-  & > div > .h-5 > :is([aria-label="Unsent draft"], [aria-label="Unpin thread"], [aria-label="Pinned"]) {
+  & > div > .h-5 > :is([aria-label="Unsent draft"], [aria-label*="pin" i]) {
     position: absolute;
     top: var(--sidebar-content-inset);
     left: var(--sidebar-row-content-inset);
@@ -285,7 +271,7 @@
     z-index: 1;
   }
 
-  & > div > .h-5 > :is([aria-label="Unpin thread"], [aria-label="Pinned"]) {
+  & > div > .h-5 > [aria-label*="pin" i] {
     margin-left: var(--pe, 0px);
   }
 
@@ -390,13 +376,13 @@
 
 [data-slot="popover-popup"]:has([data-model-picker-content]) {
   & div:has(> [data-model-picker-content]) {
-    flex-direction: column;
+    flex-flow: column;
     height: 22rem;
   }
 
   & [data-model-picker-content] {
     flex: 1;
-    flex-direction: column;
+    flex-flow: column;
     max-width: 24rem;
     height: auto;
     min-height: 7rem;
@@ -415,7 +401,7 @@
     width: auto;
 
     & .flex-col {
-      flex-direction: row;
+      flex-flow: row;
       padding: 0.25rem 0.5rem 0.375rem;
     }
 
@@ -486,8 +472,6 @@
   }
 
   & [data-model-picker-effort] [role="radiogroup"], & [class*="bg-input/40"] {
-    --c: 0;
-    --n: 1;
     position: relative;
     anchor-scope: --k;
     flex-flow: row wrap;
@@ -572,7 +556,6 @@
       min-width: 4.125rem;
       height: 26px;
       padding: 0 0.25rem;
-      justify-content: center;
       border-radius: 8px;
       text-align: center;
       font-size: 0.6875rem;
@@ -597,7 +580,7 @@
   & [data-model-picker-effort] [role="radiogroup"] {
     &::after {
       clip-path: inset(3px round 6px);
-      filter: brightness(calc(0.85 + var(--c) / max(var(--n) - 1, 1) * 0.4));
+      filter: brightness(calc(0.85 + var(--c, 0) / max(var(--n, 1) - 1, 1) * 0.4));
       background: radial-gradient(60% 80% at 50% 50%, #07061ccc 25%, #07061c4d 70%, transparent), linear-gradient(90deg, #00000073 1px, transparent 0) 1px 0 / 4px 4px, linear-gradient(0deg, #00000073 1px, transparent 0) 0 1px / 4px 4px, var(--nyx-art) right -460px top -208px / 1536px auto;
       image-rendering: pixelated;
       mask: radial-gradient(closest-side, #000 70%, transparent) center / 110% 170% no-repeat;

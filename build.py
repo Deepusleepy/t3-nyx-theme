@@ -46,7 +46,6 @@ COLORS = {
 
 
 SHORT_VARIABLES = {
-    "--nyx-dot-pair": "--D",
     "--nyx-key-glow": "--kg",
     "--nyx-key-rim": "--kr",
     "--nyx-key": "--k",
@@ -75,6 +74,8 @@ def minify(css: str) -> str:
     css = re.sub(r" ([*/]) ", r"\1", css)
     css = css.replace(";}", "}")
     css = re.sub(r"\btransparent\b", "#0000", css)
+    css = re.sub(r"#([0-9a-f])\1([0-9a-f])\2([0-9a-f])\3(([0-9a-f])\5)?\b", lambda m: "#" + m.group(1) + m.group(2) + m.group(3) + (m.group(5) or ""), css, flags=re.I)
+    css = re.sub(r"\s*([<>])\s*", r"\1", css)
     css = re.sub(r"(?<![\w.])0\.(\d)", r".\1", css)
     for long_name in sorted(SHORT_VARIABLES, key=len, reverse=True):
         css = css.replace(long_name, SHORT_VARIABLES[long_name])
