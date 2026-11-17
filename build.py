@@ -1,14 +1,34 @@
 import json
 import re
 import sys
+from dataclasses import dataclass
 from pathlib import Path
 
-from art import build_art_data_url
+from art import Sky, build_art_data_url
 
 ROOT = Path(__file__).parent
-THEME_ID = "nyx"
-THEME_NAME = "Nyx"
 CSS_LIMIT = 20_000
+
+
+@dataclass(frozen=True)
+class Theme:
+    id: str
+    name: str
+    sources: tuple[str, ...]
+    sky: Sky
+    plus_pressed: str
+
+
+THEMES = (
+    Theme("nyx", "Nyx", ("theme.css",), Sky(480, 270, seed=7, speckles=True), ""),
+    Theme(
+        "nyx-plus",
+        "Nyx Plus",
+        ("theme.css", "plus.css"),
+        Sky(400, 225, seed=8, speckles=False),
+        ",[data-model-picker-sidebar] [aria-pressed=true]",
+    ),
+)
 
 COLORS = {
     "canvas": "#000000",
@@ -83,16 +103,21 @@ def minify(css: str) -> str:
     return css.strip()
 
 
-def build() -> dict:
-    css = minify((ROOT / "theme.css").read_text())
-    css = css.replace("__ART__", build_art_data_url())
+def build(theme: Theme) -> dict:
+    css = minify("\n".join((ROOT / source).read_text() for source in theme.sources))
+    css = (
+        css.replace("__PLUS_PRESSED__", theme.plus_pressed)
+        .replace("__ART_WIDTH__", str(theme.sky.width))
+        .replace("__ART__", build_art_data_url(theme.sky))
+    )
     if len(css) > CSS_LIMIT:
-        sys.exit(f"theme css is {len(css)} characters; T3 accepts at most {CSS_LIMIT}")
-    return {"version": 1, "name": THEME_NAME, "appearance": "dark", "colors": COLORS, "css": css}
+        sys.exit(f"{theme.id} css is {len(css)} characters; T3 accepts at most {CSS_LIMIT}")
+    return {"version": 1, "name": theme.name, "appearance": "dark", "colors": COLORS, "css": css}
 
 
 if __name__ == "__main__":
-    theme = build()
-    out = ROOT / f"{THEME_ID}.json"
-    out.write_text(json.dumps(theme, indent=2) + "\n")
-    print(f"{out.name}: {len(theme['css'])} css characters")
+    for theme in THEMES:
+        built = build(theme)
+        out = ROOT / f"{theme.id}.json"
+        out.write_text(json.dumps(built, indent=2) + "\n")
+        print(f"{out.name}: {len(built['css'])} css characters")

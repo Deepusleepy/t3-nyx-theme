@@ -10,14 +10,31 @@ A night-sky theme for [T3 Code](https://t3.codes). The background is a starry sk
 ![Usage](previews/usage.png)
 ![Settings](previews/settings.png)
 
+## Nyx Plus
+
+Nyx Plus is the same sky with two layout changes:
+
+- **Title-first threads.** Each sidebar row shows the thread title on top, then the project and status, then the branch. Pinned and draft markers sit in front of the title.
+- **A simpler model picker.** Search on top, then provider icons, the model list, and glass keys for effort. The effort keys slide between levels and hide for models that have none.
+
+![Nyx Plus sidebar](previews/plus-sidebar.png)
+![Nyx Plus model picker](previews/plus-model-picker.png)
+
 ## Install
+
+Pick one. Nyx changes only colours and the background. Nyx Plus also changes the sidebar rows and the model picker.
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/Deepusleepy/t3-nyx-theme/main/nyx.json -o nyx.json
 t3 theme set nyx.json
 ```
 
-T3 switches to Nyx right away, in the desktop app and in the browser. To go back, pick another theme in the theme picker or run `t3 theme set t3-chat`.
+```sh
+curl -fsSL https://raw.githubusercontent.com/Deepusleepy/t3-nyx-theme/main/nyx-plus.json -o nyx-plus.json
+t3 theme set nyx-plus.json
+```
+
+T3 switches right away, in the desktop app and in the browser. To go back, pick another theme in the theme picker or run `t3 theme set t3-chat`.
 
 ### Let your agent install it
 
@@ -25,11 +42,13 @@ Paste this into a T3 Code thread:
 
 > Install the Nyx theme from https://github.com/Deepusleepy/t3-nyx-theme. Follow the "Instructions for agents" section of its README.
 
+For Nyx Plus, say "Nyx Plus theme" instead.
+
 ### Instructions for agents
 
-1. Download `https://raw.githubusercontent.com/Deepusleepy/t3-nyx-theme/main/nyx.json`.
-2. If the `t3` command is available, run `t3 theme set <path to nyx.json>`.
-3. Otherwise call the `t3_theme_set` tool with `themeId: "nyx"` and the file's JSON as `theme`.
+1. Download `https://raw.githubusercontent.com/Deepusleepy/t3-nyx-theme/main/nyx.json`, or `nyx-plus.json` if the user asked for Nyx Plus.
+2. If the `t3` command is available, run `t3 theme set <path to the file>`.
+3. Otherwise call the `t3_theme_set` tool with `themeId` set to `"nyx"` or `"nyx-plus"` and the file's JSON as `theme`.
 4. Do not edit the file. It is close to the size limit T3 allows for themes.
 
 ## Requirements
@@ -46,7 +65,7 @@ Paste this into a T3 Code thread:
 
 ## Change the theme yourself
 
-`theme.css` holds the styles, `art.py` draws the sky, and `build.py` puts them together into `nyx.json`.
+`theme.css` holds the shared styles and `plus.css` adds the Nyx Plus layout. `art.py` draws the sky, and `build.py` puts them together into `nyx.json` and `nyx-plus.json`.
 
 ```sh
 python3 -m venv .venv

@@ -1,13 +1,19 @@
 import base64
 import io
-from pathlib import Path
+from dataclasses import dataclass
 
 import numpy as np
 from PIL import Image
 
-WIDTH, HEIGHT = 400, 225
 SUPERSAMPLE = 3
-SEED = 8
+
+
+@dataclass(frozen=True)
+class Sky:
+    width: int
+    height: int
+    seed: int
+    speckles: bool
 
 PALETTE_HEX = [
     "#000000", "#0b0b26", "#15174a", "#22246e", "#302f94", "#3f3cb4",
@@ -35,10 +41,10 @@ def lerp(a, b, t):
     return a + (b - a) * (t[..., None] if np.ndim(t) else t)
 
 
-def paint_sky() -> np.ndarray:
-    ys, xs = np.mgrid[0:HEIGHT * SUPERSAMPLE, 0:WIDTH * SUPERSAMPLE]
-    u = (xs + 0.5) / (WIDTH * SUPERSAMPLE)
-    v = (ys + 0.5) / (HEIGHT * SUPERSAMPLE)
+def paint_sky(sky: Sky) -> np.ndarray:
+    ys, xs = np.mgrid[0:sky.height * SUPERSAMPLE, 0:sky.width * SUPERSAMPLE]
+    u = (xs + 0.5) / (sky.width * SUPERSAMPLE)
+    v = (ys + 0.5) / (sky.height * SUPERSAMPLE)
 
     glow = np.exp(-(((u - 0.62) / 0.5) ** 2 + ((v - 0.45) / 0.55) ** 2))
     img = hex_rgb("#0b0b26") * glow[..., None] * 0.9
@@ -62,20 +68,24 @@ def paint_sky() -> np.ndarray:
     curtain = np.exp(-((v - (center + 0.18)) / 0.25) ** 2) * (0.5 + 0.5 * np.sin(u * 140 + np.sin(u * 13) * 3)) ** 3
     img = lerp(img, hex_rgb("#7d45c2"), curtain * band.clip(0.15, 1) * 0.45)
 
-    return img.reshape(HEIGHT, SUPERSAMPLE, WIDTH, SUPERSAMPLE, 3).mean(axis=(1, 3))
+    return img.reshape(sky.height, SUPERSAMPLE, sky.width, SUPERSAMPLE, 3).mean(axis=(1, 3))
 
 
-def dither(img: np.ndarray) -> np.ndarray:
-    rng = np.random.default_rng(SEED)
-    threshold = np.tile(BAYER_8, (HEIGHT // 8 + 1, WIDTH // 8 + 1))[:HEIGHT, :WIDTH]
+def dither(img: np.ndarray, sky: Sky) -> np.ndarray:
+    height, width = sky.height, sky.width
+    rng = np.random.default_rng(sky.seed)
+    threshold = np.tile(BAYER_8, (height // 8 + 1, width // 8 + 1))[:height, :width]
     jittered = img + threshold[..., None] * 38
     indices = ((jittered[:, :, None, :] - PALETTE[None, None]) ** 2).sum(-1).argmin(-1).astype(np.uint8)
 
     dark = img.sum(-1) < 40
-    stars = dark & (rng.random((HEIGHT, WIDTH)) < 0.0022)
+    if sky.speckles:
+        speck = dark & (rng.random((height, width)) < 0.009)
+        indices[speck] = rng.choice([1, 2, 3, 14], size=speck.sum())
+    stars = dark & (rng.random((height, width)) < 0.0022)
     indices[stars] = rng.choice([8, 9, 15], size=stars.sum())
     for _ in range(10):
-        y, x = rng.integers(3, int(HEIGHT * 0.6)), rng.integers(3, WIDTH - 3)
+        y, x = rng.integers(3, int(height * 0.6)), rng.integers(3, width - 3)
         if dark[y, x]:
             indices[y, x] = 15
             for dy, dx in ((0, 1), (0, -1), (1, 0), (-1, 0)):
@@ -91,13 +101,6 @@ def encode_webp(indices: np.ndarray) -> bytes:
     return buffer.getvalue()
 
 
-def build_art_data_url() -> str:
-    webp = encode_webp(dither(paint_sky()))
+def build_art_data_url(sky: Sky) -> str:
+    webp = encode_webp(dither(paint_sky(sky), sky))
     return "data:image/webp;base64," + base64.b64encode(webp).decode()
-
-
-if __name__ == "__main__":
-    out = Path(__file__).parent / "build" / "art.webp"
-    out.parent.mkdir(exist_ok=True)
-    out.write_bytes(encode_webp(dither(paint_sky())))
-    print(out)
