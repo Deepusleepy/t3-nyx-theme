@@ -5,9 +5,9 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-WIDTH, HEIGHT = 384, 216
+WIDTH, HEIGHT = 400, 225
 SUPERSAMPLE = 3
-SEED = 7
+SEED = 8
 
 PALETTE_HEX = [
     "#000000", "#0b0b26", "#15174a", "#22246e", "#302f94", "#3f3cb4",
