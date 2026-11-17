@@ -21,6 +21,7 @@
 
   &:is(:hover, :has(.inset-y-0.opacity-100, .inset-y-0 :focus-visible)):not(:has(input, [data-jump-hint])) {
     --f: linear-gradient(270deg, transparent var(--m, 5.5rem), #000 calc(var(--m, 5.5rem) + 0.75rem));
+    --e: 3;
   }
 
   & > div > .mt-1 {
@@ -54,7 +55,7 @@
     height: auto;
 
     & > .mt-1 {
-      grid-area: 1 / 1;
+      grid-area: 1 / 1 / 2 / var(--e, 2);
     }
 
     & > .h-5 {
