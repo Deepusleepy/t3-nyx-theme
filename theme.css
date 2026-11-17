@@ -446,7 +446,6 @@
         height: auto;
         padding: 0;
         border: 0;
-        translate: none;
         font-size: 0.6875rem;
       }
 
@@ -607,6 +606,12 @@
     & > button {
       min-width: 1px;
       padding: 0;
+    }
+
+    @media (width < 40rem) {
+      &:has(> :nth-of-type(5)) > button {
+        flex: 0 0 33.3%;
+      }
     }
 
     &:has(> :nth-of-type(7)) > button {
