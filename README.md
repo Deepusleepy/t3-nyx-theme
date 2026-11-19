@@ -15,7 +15,7 @@ A night-sky theme for [T3 Code](https://t3.codes). The background is a starry sk
 Nyx Plus is the same sky with two layout changes:
 
 - **Title-first threads.** Each sidebar row shows the thread title on top, then the project and status, then the branch. Pinned and draft markers sit in front of the title.
-- **A simpler model picker.** Search on top, then provider icons, the model list, and glass keys for effort. The effort keys slide between levels and hide for models that have none.
+- **A simpler model picker.** Search on top, then provider icons, the model list, and glass keys for effort. The effort keys slide between levels and hide for models that have none. Fast is one on/off key, like Ultracode, and favorite stars glow lavender.
 
 ![Nyx Plus sidebar](previews/plus-sidebar.png)
 ![Nyx Plus model picker](previews/plus-model-picker.png)

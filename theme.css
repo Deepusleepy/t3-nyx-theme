@@ -4,6 +4,8 @@
   --nyx-grid: linear-gradient(90deg, #000 1px, transparent 0) 100% 100% / var(--nyx-dot) var(--nyx-dot), linear-gradient(0deg, #000 1px, transparent 0) 100% 100% / var(--nyx-dot) var(--nyx-dot);
   --nyx-sheen-edge: inset 0 -14px 22px -16px #7864ff8c, inset 0 1px 0 #ffffff0a;
   --nyx-art: url(__ART__);
+  --nyx-sky: var(--nyx-art) 100% 100% / var(--nyx-art-width) no-repeat;
+  --nyx-shine: radial-gradient(100% 60% at top, #ffffff1f, transparent 70%);
 }
 
 .dark[data-theme-id] {
@@ -32,7 +34,7 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: var(--nyx-grid), var(--nyx-art) 100% 100% / var(--nyx-art-width) no-repeat;
+  background: var(--nyx-grid), var(--nyx-sky);
   image-rendering: pixelated;
   will-change: transform;
 }
@@ -48,7 +50,7 @@
 }
 
 [data-slot="dialog-popup"][data-app-modal] {
-  background: linear-gradient(#03030ad1, #03030ad1), var(--nyx-grid), var(--nyx-art) 100% 100% / var(--nyx-art-width) no-repeat #000;
+  background: linear-gradient(#03030ad1 0 0), var(--nyx-grid), var(--nyx-sky) #000;
   background-attachment: fixed;
   border-color: #ffffff12;
   image-rendering: pixelated;
@@ -187,7 +189,7 @@
 
 [data-chat-composer-form] button[class~="bg-message-action"]:not(:disabled),
 [data-chat-composer-form] button[class~="bg-destructive/90"] {
-  background: radial-gradient(100% 60% at 50% 0%, #ffffff1f, #0000 70%), linear-gradient(150deg, var(--nyx-key)), #0d0b26;
+  background: var(--nyx-shine), linear-gradient(150deg, var(--nyx-key)), #0d0b26;
   box-shadow: inset 0 1px 0 #ffffff26, inset 0 -8px 14px -10px var(--nyx-key-glow), 0 0 0 1px var(--nyx-key-rim), 0 4px 14px -6px var(--nyx-key-glow);
   color: #f1f0ff;
   --nyx-key: #8a7fe880, #6f8cff26 60%, #4a3cc426;
@@ -212,14 +214,16 @@
   box-shadow: inset 0 1px 0 #ffffff0f, 0 24px 60px -20px #000000e6;
 }
 
-[data-app-modal] [style*="d) 30%"] {
-  background: #3a3486 !important;
-}
+[data-app-modal] {
+  & [style*="d) 30%"] {
+    background: #3a3486 !important;
+  }
 
-[data-app-modal] [style*="d) 60%"] {
-  background: #6f6cf0 !important;
-}
+  & [style*="d) 60%"] {
+    background: #6f6cf0 !important;
+  }
 
-[data-app-modal] [style*="d) 72%"] {
-  background: #a99fff !important;
+  & [style*="d) 72%"] {
+    background: #a99fff !important;
+  }
 }

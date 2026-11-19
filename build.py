@@ -74,6 +74,8 @@ SHORT_VARIABLES = {
     "--nyx-grid": "--g",
     "--nyx-dot": "--d",
     "--nyx-art": "--a",
+    "--nyx-sky": "--b",
+    "--nyx-shine": "--h",
 }
 
 
@@ -99,6 +101,7 @@ def minify(css: str) -> str:
     css = re.sub(r"(?<![\w.])0\.(\d)", r".\1", css)
     for long_name in sorted(SHORT_VARIABLES, key=len, reverse=True):
         css = css.replace(long_name, SHORT_VARIABLES[long_name])
+    css = re.sub(r"(?<=[{};,])&(?: |(?=>))", "", css)
     css = re.sub(r"\x00(\d+)\x00", lambda m: strings[int(m.group(1))], css)
     return css.strip()
 
