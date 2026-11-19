@@ -105,15 +105,15 @@
 
   &[data-sidebar-row^="draft"] > div {
     height: auto;
-  }
 
-  &[data-sidebar-row^="draft"] > div > .truncate {
-    padding-left: 1.125rem;
-  }
+    & > .truncate {
+      padding-left: 1.125rem;
+    }
 
-  &[data-sidebar-row^="draft"] > div > .h-5 > svg:first-child {
-    position: absolute;
-    translate: 0 calc(0.5px - 1.5rem);
+    & > .h-5 > svg:first-child {
+      position: absolute;
+      translate: 0 calc(0.5px - 1.5rem);
+    }
   }
 }
 
