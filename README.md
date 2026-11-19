@@ -22,7 +22,7 @@ Nyx Plus is the same sky with two layout changes:
 
 ## Install
 
-Pick one. Nyx changes only colours and the background. Nyx Plus also changes the sidebar rows and the model picker.
+Install one or both. Nyx changes only colours and the background. Nyx Plus also changes the sidebar rows and the model picker. If you install both, the one you install last is the one T3 uses, and you can switch between them in the theme picker.
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/Deepusleepy/t3-nyx-theme/main/nyx.json -o nyx.json
@@ -40,16 +40,18 @@ T3 switches right away, in the desktop app and in the browser. To go back, pick 
 
 Paste this into a T3 Code thread:
 
-> Install the Nyx theme from https://github.com/Deepusleepy/t3-nyx-theme. Follow the "Instructions for agents" section of its README.
+> Install a theme from https://github.com/Deepusleepy/t3-nyx-theme. Follow the "Instructions for agents" section of its README.
 
-For Nyx Plus, say "Nyx Plus theme" instead.
+Your agent will ask whether you want Nyx, Nyx Plus or both. To skip the question, name your pick in the message.
 
 ### Instructions for agents
 
-1. Download `https://raw.githubusercontent.com/Deepusleepy/t3-nyx-theme/main/nyx.json`, or `nyx-plus.json` if the user asked for Nyx Plus.
-2. If the `t3` command is available, run `t3 theme set <path to the file>`.
-3. Otherwise call the `t3_theme_set` tool with `themeId` set to `"nyx"` or `"nyx-plus"` and the file's JSON as `theme`.
-4. Do not edit the file. It is close to the size limit T3 allows for themes.
+1. This repo has two themes. **Nyx** changes only colours and the background. **Nyx Plus** is the same sky plus title-first sidebar rows and a simpler model picker. Both can be installed side by side.
+2. Unless the user already said "Nyx Plus", "plain Nyx" or "both", ask which they want: Nyx, Nyx Plus, or both. "The Nyx theme" alone is not a choice, so ask. If they want both, also ask which one to use now.
+3. Download each chosen file: `https://raw.githubusercontent.com/Deepusleepy/t3-nyx-theme/main/nyx.json` and/or `https://raw.githubusercontent.com/Deepusleepy/t3-nyx-theme/main/nyx-plus.json`.
+4. If the `t3` command is available, run `t3 theme set <path to the file>` for each file. Otherwise call the `t3_theme_set` tool for each, with `themeId` set to `"nyx"` or `"nyx-plus"` and the file's JSON as `theme`.
+5. Each install also switches T3 to that theme, so install the one the user wants to use now last. Both stay in the theme picker.
+6. Do not edit the files. They are close to the size limit T3 allows for themes.
 
 ## Requirements
 
