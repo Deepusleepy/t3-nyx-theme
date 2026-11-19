@@ -207,7 +207,7 @@
   background: #e6e2ff;
 }
 
-[data-slot="popover-popup"],
+[data-slot="popover-popup"]:not(:has([data-thread-details-card])),
 [data-slot="menu-popup"] {
   background: linear-gradient(160deg, #8a7fe81f, #0000 45%), color-mix(in srgb, #0b0a1e var(--glass-opacity), #0000);
   border-color: #b4aaff1f;
