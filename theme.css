@@ -24,18 +24,11 @@
 }
 
 [data-slot="sidebar-wrapper"] {
-  background: #000;
-  isolation: isolate;
+  background: var(--nyx-grid), var(--nyx-sky) #000;
+  image-rendering: pixelated;
 
-  &::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: var(--nyx-grid), var(--nyx-sky);
-    image-rendering: pixelated;
-    will-change: transform;
+  & > * {
+    image-rendering: auto;
   }
 }
 
